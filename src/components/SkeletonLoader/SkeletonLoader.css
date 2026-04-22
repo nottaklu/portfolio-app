@@ -1,0 +1,210 @@
+/* ─── SKELETON SUMMARY CARDS ─────────────────────────────────── */
+.skeleton-summary-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  padding: 0 var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.skeleton-summary-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-label {
+  height: 12px;
+  width: 60%;
+}
+
+.skeleton-value {
+  height: 24px;
+  width: 80%;
+}
+
+/* ─── SKELETON PORTFOLIO LIST ────────────────────────────────── */
+.skeleton-portfolio-list {
+  padding: 0 var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.skeleton-portfolio-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  overflow: hidden;
+}
+
+.skeleton-portfolio-strip {
+  width: 5px;
+  min-height: 100%;
+  border-radius: 0;
+}
+
+.skeleton-portfolio-content {
+  padding: var(--space-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-pf-name {
+  height: 16px;
+  width: 40%;
+}
+
+.skeleton-pf-value {
+  height: 22px;
+  width: 55%;
+}
+
+.skeleton-pf-row {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-xs);
+}
+
+.skeleton-pf-detail {
+  height: 14px;
+  width: 80px;
+}
+
+/* ─── SKELETON TILE GRID ─────────────────────────────────────── */
+.skeleton-tile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  padding: 0 var(--space-xl);
+}
+
+.skeleton-tile {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-tile-top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.skeleton-tile-badge {
+  height: 22px;
+  width: 70px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-tile-name {
+  height: 14px;
+  width: 70%;
+  margin-top: var(--space-xs);
+}
+
+.skeleton-tile-price {
+  height: 26px;
+  width: 60%;
+}
+
+.skeleton-tile-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.skeleton-tile-detail {
+  height: 12px;
+  width: 45%;
+}
+
+/* ─── SKELETON ROW LIST ──────────────────────────────────────── */
+.skeleton-row-list {
+  padding: 0 var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-row {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.skeleton-row-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.skeleton-row-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-row-name {
+  height: 14px;
+  width: 60%;
+}
+
+.skeleton-row-sub {
+  height: 11px;
+  width: 40%;
+}
+
+.skeleton-row-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.skeleton-row-price {
+  height: 16px;
+  width: 70px;
+}
+
+.skeleton-row-pnl {
+  height: 22px;
+  width: 60px;
+  border-radius: var(--radius-full);
+}
+
+/* ─── SKELETON HEADER ────────────────────────────────────────── */
+.skeleton-header {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-header-title {
+  height: 16px;
+  width: 120px;
+}
+
+.skeleton-header-value {
+  height: 36px;
+  width: 180px;
+}
+
+.skeleton-header-badge {
+  height: 26px;
+  width: 130px;
+  border-radius: var(--radius-full);
+}

@@ -1,0 +1,30 @@
+/* ─── VIEW TOGGLE ────────────────────────────────────────────── */
+.view-toggle {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card-soft);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 2px;
+}
+
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.view-toggle-btn.active {
+  background: var(--bg-card);
+  color: var(--accent-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.view-toggle-btn:not(.active):hover {
+  color: var(--text-secondary);
+}

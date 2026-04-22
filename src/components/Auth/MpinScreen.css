@@ -1,0 +1,142 @@
+/* ─── MPIN SCREEN ────────────────────────────────────────────── */
+.mpin-screen {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-xl); position: relative; overflow: hidden;
+}
+
+.mpin-bg-glow {
+  position: absolute; bottom: -120px; left: -80px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.mpin-content {
+  width: 100%; max-width: 340px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: var(--space-lg);
+}
+
+/* Avatar */
+.mpin-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  color: white; font-size: 28px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(79,70,229,0.3);
+  margin-bottom: var(--space-sm);
+}
+
+.mpin-greeting {
+  font-size: 22px; font-weight: 700; color: var(--text-primary);
+}
+.mpin-subtitle {
+  font-size: 14px; color: var(--text-muted); margin-top: -8px;
+}
+
+/* PIN inputs */
+.mpin-inputs {
+  display: flex; gap: 14px;
+  margin: var(--space-2xl) 0;
+}
+
+.mpin-digit {
+  width: 56px; height: 64px;
+  border: 2.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  font-size: 28px; font-weight: 700;
+  text-align: center; color: var(--text-primary);
+  outline: none; caret-color: var(--accent-blue);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  font-family: var(--font-family);
+  -webkit-text-security: disc;
+}
+
+.mpin-digit:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 4px rgba(79,70,229,0.1);
+  transform: scale(1.05);
+}
+
+.mpin-digit.filled {
+  border-color: var(--accent-blue);
+  background: linear-gradient(180deg, #FAFBFF, #EEF2FF);
+}
+
+/* Shake animation */
+.mpin-inputs.shake {
+  animation: mpin-shake 0.5s ease;
+}
+.mpin-inputs.shake .mpin-digit {
+  border-color: var(--red) !important;
+  background: #FEF2F2 !important;
+}
+
+@keyframes mpin-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-12px); }
+  40% { transform: translateX(12px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(8px); }
+}
+
+/* Error */
+.mpin-error {
+  font-size: 13px; font-weight: 500; color: var(--red);
+  padding: 10px 16px; border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #FEF2F2, #FECACA);
+  width: 100%;
+}
+
+/* Loading bar */
+.mpin-loading-bar {
+  width: 100%; height: 3px; border-radius: 2px;
+  background: var(--border-color); overflow: hidden;
+  position: relative;
+}
+.mpin-loading-bar::after {
+  content: ''; position: absolute; inset: 0;
+  width: 40%; background: linear-gradient(90deg, #4F46E5, #7C3AED);
+  border-radius: 2px;
+  animation: loading-slide 1s ease infinite;
+}
+@keyframes loading-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* Not you */
+.mpin-not-you {
+  font-size: 13px; color: var(--text-muted);
+  transition: color var(--transition-fast);
+  margin-top: var(--space-lg);
+}
+.mpin-not-you:hover { color: var(--accent-blue); }
+
+/* ─── SET MPIN STEP INDICATOR ────────────────────────────────── */
+.set-mpin-steps {
+  display: flex; align-items: center; gap: 0;
+  margin: var(--space-sm) 0;
+}
+.set-mpin-step {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  border: 2px solid var(--border-color);
+  color: var(--text-muted); background: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+.set-mpin-step.active {
+  border-color: var(--accent-blue); color: white;
+  background: var(--accent-blue);
+  box-shadow: 0 2px 8px rgba(79,70,229,0.3);
+}
+.set-mpin-step.done {
+  border-color: var(--green); color: white;
+  background: var(--green);
+}
+.set-mpin-line {
+  width: 40px; height: 2px; background: var(--border-color);
+}

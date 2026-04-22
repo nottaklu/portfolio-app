@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/yahoo/chart/:path*",
+      "destination": "https://query2.finance.yahoo.com/v8/finance/chart/:path*"
+    },
+    {
+      "source": "/api/yahoo/search/:path*",
+      "destination": "https://query2.finance.yahoo.com/v1/finance/search/:path*"
+    }
+  ]
+}

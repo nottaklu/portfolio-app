@@ -1,0 +1,208 @@
+/* ─── TILE VIEW GRID ─────────────────────────────────────────── */
+.tile-view-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  padding: 0 var(--space-xl);
+}
+
+/* ─── STOCK TILE ─────────────────────────────────────────────── */
+.stock-tile {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.03),
+    0 6px 16px rgba(79, 70, 229, 0.05),
+    0 12px 28px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-light);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  transition: all var(--transition-base);
+}
+
+.stock-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(79, 70, 229, 0.02) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stock-tile:hover {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(79, 70, 229, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Color strip on left — thicker, with gradient */
+.stock-tile-strip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+/* ─── CYCLE AREA ─────────────────────────────────────────────── */
+.stock-tile-cycle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px var(--space-md);
+  background: linear-gradient(135deg, var(--bg-card-soft), rgba(79, 70, 229, 0.03));
+  border-radius: var(--radius-md);
+  width: 100%;
+  min-height: 60px;
+  text-align: left;
+  transition: background var(--transition-fast);
+  position: relative;
+  z-index: 1;
+}
+
+.stock-tile-cycle:active {
+  background: linear-gradient(135deg, var(--border-color), rgba(79, 70, 229, 0.06));
+}
+
+.stock-tile-cycle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.stock-tile-cycle-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.stock-tile-cycle-value {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stock-tile-cycle-sub {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Dot indicators */
+.stock-tile-dots {
+  display: flex;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.stock-tile-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border-color);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.stock-tile-dot.active {
+  background: var(--accent-blue);
+  transform: scale(1.4);
+}
+
+/* ─── STOCK NAME ─────────────────────────────────────────────── */
+.stock-tile-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+  margin-top: var(--space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.stock-tile-fullname {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── LIVE PRICE ─────────────────────────────────────────────── */
+.stock-tile-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── BOTTOM META ────────────────────────────────────────────── */
+.stock-tile-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-light);
+  position: relative;
+  z-index: 1;
+}
+
+.stock-tile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stock-tile-meta-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.stock-tile-meta-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .stock-tile {
+    padding: var(--space-md);
+    min-height: 190px;
+  }
+
+  .stock-tile-price {
+    font-size: 18px;
+  }
+
+  .stock-tile-cycle-value {
+    font-size: 13px;
+  }
+}
