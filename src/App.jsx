@@ -45,7 +45,6 @@ export default function App() {
   const [showAddPortfolio, setShowAddPortfolio] = useState(false);
   const [showAddStock, setShowAddStock] = useState(false);
   const [sortBy, setSortBy] = useState('value');
-  const [welcomeShown, setWelcomeShown] = useState(false);
   const [priceStatus, setPriceStatus] = useState('loading');
 
   // ── Build "All Portfolios" auto-card ──
@@ -168,10 +167,9 @@ export default function App() {
 
   return (
     <div className={`app-container ${isReady ? 'has-ticker' : ''}`}>
-      {isReady && !welcomeShown && (
+      {isReady && (
         <WelcomeScreen 
           displayName={auth.profile?.display_name || 'Siddh'} 
-          onComplete={() => setWelcomeShown(true)} 
         />
       )}
       

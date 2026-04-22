@@ -17,15 +17,22 @@
 
 .welcome-text {
   font-size: 36px;
-  font-weight: 800;
   color: #000;
-  white-space: nowrap;
+  will-change: transform, opacity;
   animation: welcomeZoomIn 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
 }
 
+.welcome-light {
+  font-weight: 400;
+}
+
+.welcome-bold {
+  font-weight: 800;
+}
+
 @keyframes welcomeZoomIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  20% { transform: scale(1); opacity: 1; }
-  60% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(30); opacity: 0; }
+  0% { transform: scale(0.8); opacity: 0; filter: blur(4px); }
+  20% { transform: scale(1); opacity: 1; filter: blur(0); }
+  60% { transform: scale(1.1); opacity: 1; filter: blur(0); }
+  100% { transform: scale(4); opacity: 0; filter: blur(2px); }
 }

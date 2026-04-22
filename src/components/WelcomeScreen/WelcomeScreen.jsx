@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import './WelcomeScreen.css';
 
-export default function WelcomeScreen({ displayName, onComplete }) {
+export default function WelcomeScreen({ displayName }) {
   const [phase, setPhase] = useState('animating');
 
   useEffect(() => {
-    // The animation takes about 1.8s, wait before fading background
+    // The text zooms in over 1.5s, then we fade out the white background.
     const timer1 = setTimeout(() => {
       setPhase('done');
     }, 1500);
 
-    const timer2 = setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 2000);
-
     return () => {
       clearTimeout(timer1);
-      clearTimeout(timer2);
     };
-  }, [onComplete]);
+  }, []);
 
   return (
     <div className={`welcome-screen ${phase === 'done' ? 'fade-out' : ''}`}>
-      <h1 className="welcome-text">Welcome {displayName}</h1>
+      <h1 className="welcome-text">
+        <span className="welcome-light">Welcome</span> <span className="welcome-bold">{displayName}</span>
+      </h1>
     </div>
   );
 }
