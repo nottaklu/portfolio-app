@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SummaryCards from './SummaryCards';
 import PortfolioList from './PortfolioList';
 import { calcGrandTotals } from '../../utils/calculations';
@@ -17,9 +17,12 @@ export default function PortfolioOverview({
   displayName,
   onLogout,
 }) {
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
   // Build portfolio → stocks map for grand totals
   const portfolioStocksMap = {};
   portfolios.forEach((pf) => {
+    if (pf.id === '__all__') return; // skip "All" for calculation
     portfolioStocksMap[pf.id] = pf.stockTickers
       .map((t) => stocks[t])
       .filter(Boolean);
@@ -43,30 +46,19 @@ export default function PortfolioOverview({
       {/* ── Header ── */}
       <div className="overview-header fade-in">
         <div className="overview-header-top">
-          <div className="overview-header-greeting">
-            <span className="overview-header-label">{displayName ? `Hi, ${displayName}` : 'My Portfolio'}</span>
-            <div className={`overview-header-live ${priceStatus === 'live' ? '' : priceStatus === 'stale' ? 'stale' : ''}`}>
-              <span className={`live-dot ${priceStatus !== 'live' ? 'stale' : ''}`} />
-              <span className="live-text">
-                {priceStatus === 'live' ? 'Live' : priceStatus === 'stale' ? 'Stale' : priceStatus === 'error' ? 'Offline' : 'Loading'}
-              </span>
-            </div>
-          </div>
-          <div className="overview-header-actions">
-            <button className="overview-refresh-btn pressable" onClick={onRefresh} title="Refresh prices">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15 3V7H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M3 15V11H7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M3.51 6.5A6 6 0 0114.13 4.37L15 7M2.87 13.63A6 6 0 0014.49 11.5L3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <button className="overview-logout-btn pressable" onClick={onLogout} title="Logout">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M6.5 15.5H3.5A1 1 0 012.5 14.5V3.5A1 1 0 013.5 2.5H6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M12 12.5L15.5 9L12 5.5M6 9H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
+          <h1 className="overview-header-name">
+            {displayName ? `Hi, ${displayName}` : 'My Portfolio'}
+          </h1>
+          <button
+            className="overview-logout-btn pressable"
+            onClick={() => setShowLogoutConfirm(true)}
+            title="Logout"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7 17H4a1 1 0 01-1-1V4a1 1 0 011-1h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M13 14l4-4-4-4M7 10h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
 
         <div className="overview-header-value tabular-nums count-pulse">
@@ -94,7 +86,31 @@ export default function PortfolioOverview({
         onAddPortfolio={onAddPortfolio}
       />
 
-      <div style={{ height: '40px' }} />
+      <div style={{ height: '100px' }} /> {/* spacing for bottom nav */}
+
+      {/* ── Logout Confirmation ── */}
+      {showLogoutConfirm && (
+        <div className="logout-overlay" onClick={() => setShowLogoutConfirm(false)}>
+          <div className="logout-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="logout-modal-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path d="M16 17l5-5-5-5M8 12h13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <h3 className="logout-modal-title">Sign Out?</h3>
+            <p className="logout-modal-text">You'll need your username and password to sign back in.</p>
+            <div className="logout-modal-actions">
+              <button className="logout-cancel-btn pressable" onClick={() => setShowLogoutConfirm(false)}>
+                Cancel
+              </button>
+              <button className="logout-confirm-btn pressable" onClick={onLogout}>
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

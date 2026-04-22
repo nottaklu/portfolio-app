@@ -10,23 +10,34 @@
 .summary-card {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
-  padding: var(--space-lg) var(--space-lg) var(--space-xl);
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.04), 0 8px 24px rgba(0, 0, 0, 0.03);
+  padding: var(--space-lg);
+  box-shadow:
+    0 2px 8px rgba(79, 70, 229, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.04),
+    0 16px 48px rgba(79, 70, 229, 0.03);
   border: 1px solid var(--border-light);
   transition: box-shadow var(--transition-base), transform var(--transition-fast);
   position: relative;
   overflow: hidden;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Subtle gradient overlay per card */
+.summary-card:nth-child(1) { background: linear-gradient(135deg, #FFFFFF 60%, #EEF2FF); }
+.summary-card:nth-child(2) { background: linear-gradient(135deg, #FFFFFF 60%, #F5F3FF); }
+.summary-card:nth-child(3) { background: linear-gradient(135deg, #FFFFFF 60%, #F0FDF4); }
+.summary-card:nth-child(4) { background: linear-gradient(135deg, #FFFFFF 60%, #FFFBEB); }
+
+/* Bottom accent bar — always visible */
 .summary-card::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 3px;
-  opacity: 0;
-  transition: opacity var(--transition-base);
+  opacity: 0.7;
 }
 
 .summary-card:nth-child(1)::after { background: linear-gradient(90deg, #4F46E5, #818CF8); }
@@ -34,9 +45,13 @@
 .summary-card:nth-child(3)::after { background: linear-gradient(90deg, #22C55E, #4ADE80); }
 .summary-card:nth-child(4)::after { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
 
-.summary-card:hover::after {
-  opacity: 1;
+.summary-card:hover {
+  box-shadow:
+    0 4px 12px rgba(79, 70, 229, 0.08),
+    0 12px 36px rgba(0, 0, 0, 0.06),
+    0 20px 60px rgba(79, 70, 229, 0.05);
 }
+.summary-card:hover::after { opacity: 1; }
 
 .summary-card:active {
   transform: scale(0.97);
@@ -46,7 +61,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
 /* Icon wrapper with gradient tint */
@@ -60,40 +75,23 @@
   flex-shrink: 0;
 }
 
-.summary-card-icon-wrap.gradient-blue {
-  background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
-  color: #4F46E5;
-}
+.summary-card-icon-wrap.gradient-blue { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); color: #4F46E5; }
+.summary-card-icon-wrap.gradient-purple { background: linear-gradient(135deg, #F5F3FF, #EDE9FE); color: #7C3AED; }
+.summary-card-icon-wrap.gradient-green { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); color: #22C55E; }
+.summary-card-icon-wrap.gradient-amber { background: linear-gradient(135deg, #FFFBEB, #FEF3C7); color: #F59E0B; }
 
-.summary-card-icon-wrap.gradient-purple {
-  background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
-  color: #7C3AED;
-}
-
-.summary-card-icon-wrap.gradient-green {
-  background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-  color: #22C55E;
-}
-
-.summary-card-icon-wrap.gradient-amber {
-  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-  color: #F59E0B;
-}
-
-.summary-card-svg {
-  display: block;
-}
+.summary-card-svg { display: block; }
 
 .summary-card-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .summary-card-value {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.2;
@@ -105,18 +103,13 @@
 .summary-card-sub {
   font-size: 12px;
   font-weight: 600;
-  margin-top: 4px;
+  margin-top: 2px;
 }
-
 .summary-card-sub.positive { color: var(--green); }
 .summary-card-sub.negative { color: var(--red); }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 360px) {
-  .summary-card-value {
-    font-size: 16px;
-  }
-  .summary-card {
-    padding: var(--space-md);
-  }
+  .summary-card-value { font-size: 15px; }
+  .summary-card { padding: var(--space-md); min-height: 96px; }
 }

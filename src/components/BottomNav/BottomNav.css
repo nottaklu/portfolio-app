@@ -1,0 +1,46 @@
+/* ─── BOTTOM NAV ─────────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(230, 233, 242, 0.6);
+  border-radius: 20px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 8px 32px rgba(79, 70, 229, 0.06);
+  z-index: 50;
+  min-width: 220px;
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 20px;
+  border-radius: 16px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all var(--transition-fast);
+}
+
+.bottom-nav-item.active {
+  color: var(--accent-blue);
+  background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+}
+
+.bottom-nav-item:not(.active):hover {
+  color: var(--text-secondary);
+  background: var(--bg-card-soft);
+}

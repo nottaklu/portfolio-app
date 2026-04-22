@@ -16,16 +16,17 @@ export default function PortfolioDetail({
   onAddStock,
   sortBy,
   loading,
+  tickerPortfolioMap, // Only for "All Portfolios" view
 }) {
   const [view, setView] = useState('tile');
 
-  // Get stocks for this portfolio from dynamic stocks map
   const rawStocks = portfolio.stockTickers
     .map((t) => stocks[t])
     .filter(Boolean);
   const sortedStocks = sortBy ? sortStocks(rawStocks, sortBy) : rawStocks;
   const totals = calcPortfolioTotals(rawStocks);
   const pnlClass = getPnLClass(totals.totalPnL);
+  const isAllView = portfolio.id === '__all__';
 
   return (
     <div className="portfolio-detail screen-enter">
@@ -102,12 +103,14 @@ export default function PortfolioDetail({
                 {sortBy === 'alpha' ? 'A-Z' : sortBy === 'dayGainPct' ? 'Day %' : sortBy === 'totalPnLPct' ? 'P&L %' : sortBy === 'currentValue' ? 'Value' : 'Invested'}
               </span>
             )}
-            <button className="detail-add-stock-btn pressable" onClick={onAddStock}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <span>Add</span>
-            </button>
+            {onAddStock && (
+              <button className="detail-add-stock-btn pressable" onClick={onAddStock}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                <span>Add</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -119,15 +122,17 @@ export default function PortfolioDetail({
               <rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" strokeWidth="2" />
               <path d="M14 24H34M24 18V30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <p>No stocks in this portfolio yet</p>
-            <button className="detail-empty-add-btn pressable" onClick={onAddStock}>
-              Add your first stock
-            </button>
+            <p>{isAllView ? 'No stocks in any portfolio yet' : 'No stocks in this portfolio yet'}</p>
+            {!isAllView && onAddStock && (
+              <button className="detail-empty-add-btn pressable" onClick={onAddStock}>
+                Add your first stock
+              </button>
+            )}
           </div>
         ) : view === 'tile' ? (
-          <TileView stocks={sortedStocks} onStockClick={onStockClick} />
+          <TileView stocks={sortedStocks} onStockClick={onStockClick} tickerPortfolioMap={tickerPortfolioMap} />
         ) : (
-          <RowView stocks={sortedStocks} onStockClick={onStockClick} />
+          <RowView stocks={sortedStocks} onStockClick={onStockClick} tickerPortfolioMap={tickerPortfolioMap} />
         )}
       </div>
 

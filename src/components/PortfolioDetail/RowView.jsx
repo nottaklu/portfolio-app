@@ -3,7 +3,7 @@ import { calcStockMetrics } from '../../utils/calculations';
 import { formatCurrency, formatCurrencyDecimal, formatPercent, getArrow, getPnLClass } from '../../utils/formatters';
 import './RowView.css';
 
-function StockRow({ stock, onClick, index }) {
+function StockRow({ stock, onClick, index, portfolioIndicators }) {
   const [cycleIndex, setCycleIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const metrics = calcStockMetrics(stock);
@@ -69,6 +69,15 @@ function StockRow({ stock, onClick, index }) {
           <span className="stock-row-qty">{stock.qty} shares</span>
           <span className="stock-row-separator">·</span>
           <span className="stock-row-avg tabular-nums">Avg {formatCurrencyDecimal(stock.avgPrice)}</span>
+          {portfolioIndicators && portfolioIndicators.length > 0 && (
+            <div className="stock-row-portfolio-tags">
+              {portfolioIndicators.map((pf, i) => (
+                <span key={i} className="stock-row-pf-tag" style={{ background: pf.color + '18', color: pf.color, borderColor: pf.color + '30' }}>
+                  {pf.name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -98,7 +107,7 @@ function StockRow({ stock, onClick, index }) {
   );
 }
 
-export default function RowView({ stocks, onStockClick }) {
+export default function RowView({ stocks, onStockClick, tickerPortfolioMap }) {
   return (
     <div className="row-view-list">
       {stocks.map((stock, i) => (
@@ -107,6 +116,7 @@ export default function RowView({ stocks, onStockClick }) {
           stock={stock}
           onClick={onStockClick}
           index={i}
+          portfolioIndicators={tickerPortfolioMap ? tickerPortfolioMap[stock.ticker] : null}
         />
       ))}
     </div>

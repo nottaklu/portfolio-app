@@ -5,7 +5,7 @@ import './TileView.css';
 
 const CYCLE_LABELS = ['Day Gain', 'Total P&L', 'Current Value'];
 
-function StockTile({ stock, onClick }) {
+function StockTile({ stock, onClick, portfolioIndicators }) {
   const [cycleIndex, setCycleIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const metrics = calcStockMetrics(stock);
@@ -108,16 +108,28 @@ function StockTile({ stock, onClick }) {
           </span>
         </div>
       </div>
+      {/* Portfolio indicator for All view */}
+      {portfolioIndicators && portfolioIndicators.length > 0 && (
+        <div className="stock-tile-pf-tags">
+          {portfolioIndicators.map((pf, i) => (
+            <span key={i} className="stock-tile-pf-dot" style={{ background: pf.color }} title={pf.name} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-export default function TileView({ stocks, onStockClick }) {
+export default function TileView({ stocks, onStockClick, tickerPortfolioMap }) {
   return (
     <div className="tile-view-grid">
       {stocks.map((stock, i) => (
         <div key={stock.ticker} className={`stagger-${(i % 6) + 1}`}>
-          <StockTile stock={stock} onClick={onStockClick} />
+          <StockTile
+            stock={stock}
+            onClick={onStockClick}
+            portfolioIndicators={tickerPortfolioMap ? tickerPortfolioMap[stock.ticker] : null}
+          />
         </div>
       ))}
     </div>

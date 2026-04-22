@@ -206,3 +206,19 @@
     font-size: 13px;
   }
 }
+
+/* ─── PORTFOLIO INDICATOR DOTS (All view) ────────────────────── */
+.stock-tile-pf-tags {
+  display: flex;
+  gap: 4px;
+  padding: 6px var(--space-lg) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stock-tile-pf-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}

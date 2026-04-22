@@ -170,3 +170,20 @@
   background: var(--accent-blue);
   transform: scale(1.5);
 }
+
+/* ─── PORTFOLIO TAGS (All view) ──────────────────────────────── */
+.stock-row-portfolio-tags {
+  display: flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.stock-row-pf-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}

@@ -8,7 +8,7 @@ export default function PortfolioList({ portfolios, stocks, onSelectPortfolio, o
     <div className="portfolio-list">
       <div className="portfolio-list-header">
         <h2 className="portfolio-list-title">My Portfolios</h2>
-        <span className="portfolio-list-count">{portfolios.length} portfolios</span>
+        <span className="portfolio-list-count">{portfolios.filter(p => p.id !== '__all__').length} portfolios</span>
       </div>
 
       <div className="portfolio-list-items">
@@ -18,11 +18,12 @@ export default function PortfolioList({ portfolios, stocks, onSelectPortfolio, o
             .filter(Boolean);
           const totals = calcPortfolioTotals(pfStocks);
           const pnlClass = getPnLClass(totals.totalPnL);
+          const isAll = pf.id === '__all__';
 
           return (
             <button
               key={pf.id}
-              className={`portfolio-card pressable fade-in stagger-${i + 3}`}
+              className={`portfolio-card pressable fade-in stagger-${i + 3} ${isAll ? 'portfolio-card-all' : ''}`}
               onClick={() => onSelectPortfolio(pf)}
             >
               <div
@@ -38,7 +39,7 @@ export default function PortfolioList({ portfolios, stocks, onSelectPortfolio, o
                     />
                     <h3 className="portfolio-card-name">{pf.name}</h3>
                     <span className="portfolio-card-type-badge">
-                      {pf.type === 'manual' ? 'MANUAL' : 'SHEETS'}
+                      {isAll ? 'ALL' : pf.type === 'manual' ? 'MANUAL' : 'SHEETS'}
                     </span>
                   </div>
                   <svg
