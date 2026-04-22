@@ -16,61 +16,7 @@
   letter-spacing: -0.5px;
 }
 
-/* ─── TICKER TAPE ────────────────────────────────────────────── */
-.ticker-tape-wrap {
-  overflow: hidden;
-  padding: 0 0 var(--space-xl);
-  mask-image: linear-gradient(90deg, transparent, black 20px, black calc(100% - 20px), transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 20px, black calc(100% - 20px), transparent);
-}
 
-.ticker-tape {
-  overflow: hidden;
-  position: relative;
-}
-
-.ticker-tape-track {
-  display: flex;
-  gap: var(--space-xl);
-  width: max-content;
-  animation: tickerScroll 30s linear infinite;
-}
-
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.ticker-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: var(--bg-card);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-light);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.ticker-item-name {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.ticker-item-price {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.ticker-item-change {
-  font-size: 11px;
-  font-weight: 700;
-}
-.ticker-item-change.positive { color: var(--green); }
-.ticker-item-change.negative { color: var(--red); }
 
 /* ─── DASHBOARD GRID ─────────────────────────────────────────── */
 .dashboard-grid {

@@ -79,24 +79,7 @@ export default function Dashboard({ stocks, portfolios, displayName, onLogout })
         <h1 className="dashboard-title">Dashboard</h1>
       </div>
 
-      {/* ── Ticker Tape ── */}
-      {tickerData.length > 0 && (
-        <div className="ticker-tape-wrap">
-          <div className="ticker-tape">
-            <div className="ticker-tape-track">
-              {[...tickerData, ...tickerData].map((t, i) => (
-                <div key={`${t.ticker}-${i}`} className="ticker-item">
-                  <span className="ticker-item-name">{t.ticker}</span>
-                  <span className="ticker-item-price tabular-nums">{formatCurrency(t.price)}</span>
-                  <span className={`ticker-item-change tabular-nums ${t.change >= 0 ? 'positive' : 'negative'}`}>
-                    {t.change >= 0 ? '▲' : '▼'} {Math.abs(t.changePct).toFixed(1)}%
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* ── Overview Tile ── */}
       <div className="dashboard-grid fade-in">

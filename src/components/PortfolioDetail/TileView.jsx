@@ -62,14 +62,6 @@ function StockTile({ stock, onClick, portfolioIndicators }) {
         style={{ backgroundColor: pnlClass === 'positive' ? 'var(--green)' : pnlClass === 'negative' ? 'var(--red)' : 'var(--border-color)' }}
       />
 
-      {/* Ticker initials badge */}
-      <div
-        className="stock-tile-initials"
-        style={{ backgroundColor: (SECTOR_COLORS[stock.sector] || '#6B7280') + '18', color: SECTOR_COLORS[stock.sector] || '#6B7280' }}
-      >
-        {getInitials(stock.name)}
-      </div>
-
       {/* Cycling data area */}
       <button className="stock-tile-cycle" onClick={handleCycle}>
         <div className={`stock-tile-cycle-content ${animating ? '' : 'cycle-enter'}`}>

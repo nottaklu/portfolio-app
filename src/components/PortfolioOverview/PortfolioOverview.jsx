@@ -6,6 +6,35 @@ import { formatCurrency, formatPercent, getArrow, getPnLClass } from '../../util
 import { HeaderSkeleton, SummaryCardsSkeleton, PortfolioListSkeleton } from '../SkeletonLoader/SkeletonLoader';
 import './PortfolioOverview.css';
 
+function AnimatedNumber({ value }) {
+  const [displayValue, setDisplayValue] = React.useState(0);
+
+  React.useEffect(() => {
+    let startTimestamp = null;
+    const duration = 1500;
+    const initial = displayValue;
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      
+      setDisplayValue(initial + (value - initial) * easeProgress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return formatCurrency(displayValue);
+}
+
 export default function PortfolioOverview({
   portfolios,
   stocks,
@@ -62,7 +91,7 @@ export default function PortfolioOverview({
         </div>
 
         <div className="overview-header-value tabular-nums count-pulse">
-          {formatCurrency(grandTotals.grandCurrentValue)}
+          <AnimatedNumber value={grandTotals.grandCurrentValue} />
         </div>
 
         <div className={`overview-header-change ${pnlClass}`}>

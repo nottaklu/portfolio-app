@@ -173,6 +173,10 @@ img {
   box-shadow: 0 0 60px rgba(79, 70, 229, 0.06), 0 0 120px rgba(0, 0, 0, 0.04);
 }
 
+.app-container.has-ticker {
+  padding-top: 36px;
+}
+
 /* ─── SCREEN TRANSITIONS ─────────────────────────────────────── */
 .screen-enter {
   animation: slideInRight var(--transition-slow) ease forwards;

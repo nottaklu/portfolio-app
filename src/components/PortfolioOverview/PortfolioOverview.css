@@ -20,7 +20,7 @@
 
 .overview-header-name {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
   letter-spacing: -0.3px;
 }

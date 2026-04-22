@@ -1,0 +1,56 @@
+/* ─── TICKER TAPE ────────────────────────────────────────────── */
+.ticker-tape-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  overflow: hidden;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-tape {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-tape-track {
+  display: inline-flex;
+  gap: var(--space-2xl);
+  padding: 0 var(--space-md);
+  animation: ticker-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.ticker-tape-track:hover {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ticker-item-name {
+  color: var(--text-primary);
+}
+
+.ticker-item-price {
+  color: var(--text-secondary);
+}
+
+.ticker-item-change.positive { color: var(--green); }
+.ticker-item-change.negative { color: var(--red); }
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); }
+}

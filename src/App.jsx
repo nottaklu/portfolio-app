@@ -10,6 +10,8 @@ import StockModal from './components/StockDetail/StockModal';
 import SortModal from './components/SortModal/SortModal';
 import AddPortfolioModal from './components/AddPortfolioModal/AddPortfolioModal';
 import AddStockModal from './components/AddStockModal/AddStockModal';
+import TickerTape from './components/TickerTape/TickerTape';
+import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
 import { useAuth } from './hooks/useAuth';
 import { usePortfolios } from './hooks/usePortfolios';
 import { fetchAllLivePrices } from './lib/yahooFinance';
@@ -42,7 +44,8 @@ export default function App() {
   const [showSortModal, setShowSortModal] = useState(false);
   const [showAddPortfolio, setShowAddPortfolio] = useState(false);
   const [showAddStock, setShowAddStock] = useState(false);
-  const [sortBy, setSortBy] = useState(null);
+  const [sortBy, setSortBy] = useState('value');
+  const [welcomeShown, setWelcomeShown] = useState(false);
   const [priceStatus, setPriceStatus] = useState('loading');
 
   // ── Build "All Portfolios" auto-card ──
@@ -161,8 +164,19 @@ export default function App() {
   }
 
   // ─── MAIN APP ────────────────────────────────────────────────
+  const isReady = auth.authState === 'ready';
+
   return (
-    <div className="app-container">
+    <div className={`app-container ${isReady ? 'has-ticker' : ''}`}>
+      {isReady && !welcomeShown && (
+        <WelcomeScreen 
+          displayName={auth.profile?.display_name || 'Siddh'} 
+          onComplete={() => setWelcomeShown(true)} 
+        />
+      )}
+      
+      {isReady && <TickerTape stocks={stocks} />}
+
       {/* ── Portfolio Tab ── */}
       {activeTab === 'portfolio' && screen === 'overview' && (
         <PortfolioOverview

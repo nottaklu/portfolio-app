@@ -1,0 +1,31 @@
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.welcome-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.welcome-text {
+  font-size: 36px;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap;
+  animation: welcomeZoomIn 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+@keyframes welcomeZoomIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  20% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(30); opacity: 0; }
+}
