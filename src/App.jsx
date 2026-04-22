@@ -27,6 +27,8 @@ export default function App() {
     loading: dataLoading,
     addPortfolio,
     addStock,
+    editStock,
+    deleteStock,
     updateStockPrices,
   } = usePortfolios(auth.user?.id);
 
@@ -205,7 +207,20 @@ export default function App() {
       )}
 
       {/* ── Modals ── */}
-      {selectedStock && <StockModal stock={selectedStock} onClose={() => setSelectedStock(null)} />}
+      {selectedStock && (
+        <StockModal
+          stock={selectedStock}
+          onClose={() => setSelectedStock(null)}
+          portfolioId={selectedPortfolio?.id !== '__all__' ? selectedPortfolio?.id : null}
+          onEditStock={selectedPortfolio?.id !== '__all__' ? (ticker, qty, avg) => {
+            editStock(selectedPortfolio.id, ticker, qty, avg);
+            setSelectedStock((prev) => prev ? { ...prev, qty, avgPrice: avg } : null);
+          } : null}
+          onRemoveStock={selectedPortfolio?.id !== '__all__' ? (ticker) => {
+            deleteStock(selectedPortfolio.id, ticker);
+          } : null}
+        />
+      )}
 
       {showSortModal && (
         <SortModal currentSort={sortBy} onApply={(s) => setSortBy(s)} onClose={() => setShowSortModal(false)} />

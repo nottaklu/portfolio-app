@@ -7,24 +7,24 @@ export default function BottomNav({ activeTab, onTabChange }) {
       <button
         className={`bottom-nav-item ${activeTab === 'portfolio' ? 'active' : ''}`}
         onClick={() => onTabChange('portfolio')}
+        aria-label="Portfolio"
       >
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <rect x="3" y="7" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.6" />
-          <path d="M7 7V5a4 4 0 018 0v2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="7" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.6" />
+          <path d="M6 7V5a4 4 0 018 0v2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
         </svg>
-        <span>Portfolio</span>
       </button>
       <button
         className={`bottom-nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
         onClick={() => onTabChange('dashboard')}
+        aria-label="Dashboard"
       >
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <rect x="3" y="3" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
-          <rect x="13" y="3" width="6" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
-          <rect x="3" y="14" width="6" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
-          <rect x="13" y="11" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="3" width="5.5" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+          <rect x="11.5" y="3" width="5.5" height="4.5" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+          <rect x="3" y="12.5" width="5.5" height="4.5" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+          <rect x="11.5" y="10" width="5.5" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
         </svg>
-        <span>Dashboard</span>
       </button>
     </nav>
   );

@@ -181,79 +181,7 @@
 .stock-modal-metric-value.positive { color: var(--green); }
 .stock-modal-metric-value.negative { color: var(--red); }
 
-/* ─── CHART ──────────────────────────────────────────────────── */
-.stock-modal-chart-section {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  margin-bottom: var(--space-2xl);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-light);
-}
-
-.stock-modal-chart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-lg);
-}
-
-.stock-modal-chart-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.stock-modal-time-tabs {
-  display: flex;
-  gap: 2px;
-  background: var(--bg-card-soft);
-  border-radius: var(--radius-sm);
-  padding: 2px;
-}
-
-.stock-modal-time-tab {
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  border-radius: 6px;
-  transition: all var(--transition-fast);
-}
-
-.stock-modal-time-tab.active {
-  background: var(--bg-card);
-  color: var(--accent-blue);
-  box-shadow: var(--shadow-sm);
-}
-
-.stock-modal-chart-container {
-  height: 200px;
-  position: relative;
-}
-
-.stock-modal-chart-legend {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-md);
-}
-
-.stock-modal-chart-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.stock-modal-chart-legend-line {
-  width: 20px;
-  height: 0;
-  border-top: 1.5px dashed var(--text-muted);
-}
-
-/* ─── 52 WEEK RANGE ──────────────────────────────────────────── */
+/* ─── RANGE ──────────────────────────────────────────────────── */
 .stock-modal-range-section {
   margin-bottom: var(--space-2xl);
 }
@@ -308,14 +236,30 @@
 
 /* ─── TRANSACTIONS ───────────────────────────────────────────── */
 .stock-modal-transactions {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-lg);
 }
 
-.stock-modal-empty {
-  text-align: center;
-  padding: var(--space-2xl);
-  color: var(--text-muted);
+.stock-modal-tx-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.stock-modal-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-blue);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(79, 70, 229, 0.06);
+  transition: all var(--transition-fast);
+}
+.stock-modal-edit-btn:hover {
+  background: rgba(79, 70, 229, 0.12);
 }
 
 .stock-modal-tx-list {
@@ -347,16 +291,8 @@
   border-radius: var(--radius-sm);
   letter-spacing: 0.5px;
 }
-
-.stock-modal-tx-type.buy {
-  background: var(--green-bg);
-  color: var(--green);
-}
-
-.stock-modal-tx-type.sell {
-  background: var(--red-bg);
-  color: var(--red);
-}
+.stock-modal-tx-type.buy { background: var(--green-bg); color: var(--green); }
+.stock-modal-tx-type.sell { background: var(--red-bg); color: var(--red); }
 
 .stock-modal-tx-date {
   font-size: 13px;
@@ -382,3 +318,100 @@
   font-weight: 600;
   color: var(--text-primary);
 }
+
+/* ─── EDIT FORM ──────────────────────────────────────────────── */
+.stock-modal-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+}
+
+.stock-modal-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stock-modal-edit-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stock-modal-edit-input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+.stock-modal-edit-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.stock-modal-edit-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.stock-modal-cancel-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card-soft);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stock-modal-save-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--accent-blue);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+.stock-modal-save-btn:hover { opacity: 0.9; }
+
+/* ─── REMOVE STOCK ───────────────────────────────────────────── */
+.stock-modal-remove-section {
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.stock-modal-remove-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  border: 1.5px solid rgba(239, 68, 68, 0.2);
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+.stock-modal-remove-btn:hover {
+  background: #FEF2F2;
+  border-color: var(--red);
+}
+

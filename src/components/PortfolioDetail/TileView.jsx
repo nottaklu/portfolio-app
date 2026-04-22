@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { calcStockMetrics } from '../../utils/calculations';
-import { formatCurrency, formatCurrencyDecimal, formatPercent, getArrow, getPnLClass } from '../../utils/formatters';
+import { formatCurrency, formatCurrencyDecimal, formatPercent, getArrow, getPnLClass, getInitials } from '../../utils/formatters';
+import { SECTOR_COLORS } from '../../data/mockData';
 import './TileView.css';
 
 const CYCLE_LABELS = ['Day Gain', 'Total P&L', 'Current Value'];
@@ -60,6 +61,14 @@ function StockTile({ stock, onClick, portfolioIndicators }) {
         className="stock-tile-strip"
         style={{ backgroundColor: pnlClass === 'positive' ? 'var(--green)' : pnlClass === 'negative' ? 'var(--red)' : 'var(--border-color)' }}
       />
+
+      {/* Ticker initials badge */}
+      <div
+        className="stock-tile-initials"
+        style={{ backgroundColor: (SECTOR_COLORS[stock.sector] || '#6B7280') + '18', color: SECTOR_COLORS[stock.sector] || '#6B7280' }}
+      >
+        {getInitials(stock.name)}
+      </div>
 
       {/* Cycling data area */}
       <button className="stock-tile-cycle" onClick={handleCycle}>

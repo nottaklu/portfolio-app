@@ -227,15 +227,42 @@ export function usePortfolios(userId) {
     });
   }, []);
 
+  // ── Edit stock qty/avgPrice ──
+  const editStock = useCallback(async (portfolioId, ticker, newQty, newAvgPrice) => {
+    try {
+      const { error } = await supabase
+        .from('portfolio_stocks')
+        .update({ qty: newQty, avg_price: newAvgPrice })
+        .eq('portfolio_id', portfolioId)
+        .eq('ticker', ticker);
+
+      if (error) throw error;
+
+      setStocks((prev) => ({
+        ...prev,
+        [ticker]: {
+          ...prev[ticker],
+          qty: newQty,
+          avgPrice: newAvgPrice,
+        },
+      }));
+    } catch (err) {
+      console.error('Edit stock failed:', err);
+      throw err;
+    }
+  }, []);
+
   return {
     portfolios,
     stocks,
     loading,
     addPortfolio,
     addStock,
+    editStock,
     deletePortfolio,
     deleteStock,
     updateStockPrices,
     reload: loadData,
   };
 }
+
