@@ -43,6 +43,7 @@ export default function PortfolioOverview({
   loading,
   priceStatus,
   onRefresh,
+  refreshing,
   displayName,
   onLogout,
 }) {
@@ -75,9 +76,20 @@ export default function PortfolioOverview({
       {/* ── Header ── */}
       <div className="overview-header fade-in">
         <div className="overview-header-top">
-          <h1 className="overview-header-name">
-            {displayName ? `Hi, ${displayName}` : 'My Portfolio'}
-          </h1>
+          <div>
+            <h1 className="overview-header-name">
+              {displayName ? `Hi, ${displayName}` : 'My Portfolio'}
+            </h1>
+            <button
+              className="overview-refresh-btn pressable"
+              onClick={onRefresh}
+              disabled={refreshing}
+              title="Refresh sheet and live data"
+            >
+              {refreshing ? 'Refreshing...' : 'Refresh'}
+            </button>
+          </div>
+
           <button
             className="overview-logout-btn pressable"
             onClick={() => setShowLogoutConfirm(true)}

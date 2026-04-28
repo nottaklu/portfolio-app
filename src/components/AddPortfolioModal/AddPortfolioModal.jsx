@@ -9,6 +9,10 @@ const COLORS = [
 export default function AddPortfolioModal({ onAdd, onClose }) {
   const [name, setName] = useState('');
   const [color, setColor] = useState(COLORS[0]);
+  const [source, setSource] = useState('manual');
+  const [sheetUrl, setSheetUrl] = useState('');
+  const [sheetName, setSheetName] = useState('');
+  const [sheetRange, setSheetRange] = useState('A2:J1001');
   const [isVisible, setIsVisible] = useState(false);
   const overlayRef = useRef(null);
   const inputRef = useRef(null);
@@ -28,13 +32,25 @@ export default function AddPortfolioModal({ onAdd, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) return;
-    onAdd({
-      id: name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now(),
+
+    const portfolio = {
       name: name.trim(),
       color,
-      type: 'manual',
-      stockTickers: [],
-    });
+      type: source === 'sheets' ? 'sheets' : 'manual',
+    };
+
+    if (source === 'sheets') {
+      if (!sheetUrl.trim() || !sheetName.trim()) return;
+      const sheetConfig = {
+        url: sheetUrl.trim(),
+        sheetName: sheetName.trim(),
+        sheetRange: sheetRange.trim() || 'A2:J1001',
+      };
+      onAdd(portfolio, sheetConfig);
+    } else {
+      onAdd(portfolio);
+    }
+
     handleClose();
   };
 
@@ -59,10 +75,68 @@ export default function AddPortfolioModal({ onAdd, onClose }) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. My Growth Portfolio"
+              placeholder="e.g. Green Lantern PMS"
               maxLength={30}
             />
           </div>
+
+          <div className="add-pf-field">
+            <label className="add-pf-label">Source</label>
+            <div className="add-pf-source-selector">
+              <button
+                type="button"
+                className={`source-option ${source === 'manual' ? 'active' : ''}`}
+                onClick={() => setSource('manual')}
+              >
+                Manual
+              </button>
+              <button
+                type="button"
+                className={`source-option ${source === 'sheets' ? 'active' : ''}`}
+                onClick={() => setSource('sheets')}
+              >
+                Google Sheet
+              </button>
+            </div>
+          </div>
+
+          {source === 'sheets' && (
+            <>
+              <div className="add-pf-field">
+                <label className="add-pf-label">Google Sheet URL</label>
+                <input
+                  className="add-pf-input"
+                  type="url"
+                  value={sheetUrl}
+                  onChange={(e) => setSheetUrl(e.target.value)}
+                  placeholder="https://docs.google.com/spreadsheets/d/..."
+                />
+              </div>
+
+              <div className="add-pf-field">
+                <label className="add-pf-label">Sheet Name</label>
+                <input
+                  className="add-pf-input"
+                  type="text"
+                  value={sheetName}
+                  onChange={(e) => setSheetName(e.target.value)}
+                  placeholder="Green Lantern PMS"
+                />
+              </div>
+
+              <div className="add-pf-field">
+                <label className="add-pf-label">Sheet Range</label>
+                <input
+                  className="add-pf-input"
+                  type="text"
+                  value={sheetRange}
+                  onChange={(e) => setSheetRange(e.target.value)}
+                  placeholder="A2:J1001"
+                />
+                <p className="add-pf-field-note">Only columns A (ticker), B (qty) and J (cost price) are used.</p>
+              </div>
+            </>
+          )}
 
           <div className="add-pf-field">
             <label className="add-pf-label">Color</label>
@@ -85,7 +159,6 @@ export default function AddPortfolioModal({ onAdd, onClose }) {
             </div>
           </div>
 
-          {/* Preview */}
           <div className="add-pf-preview">
             <div className="add-pf-preview-strip" style={{ backgroundColor: color }} />
             <div className="add-pf-preview-content">
@@ -97,7 +170,7 @@ export default function AddPortfolioModal({ onAdd, onClose }) {
           <button
             type="submit"
             className="add-pf-submit pressable"
-            disabled={!name.trim()}
+            disabled={!name.trim() || (source === 'sheets' && (!sheetUrl.trim() || !sheetName.trim()))}
           >
             Create Portfolio
           </button>

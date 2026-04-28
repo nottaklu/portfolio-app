@@ -14,11 +14,13 @@ export default function PortfolioDetail({
   onStockClick,
   onOpenSort,
   onAddStock,
+  onDeletePortfolio,
   sortBy,
   loading,
   tickerPortfolioMap, // Only for "All Portfolios" view
 }) {
   const [view, setView] = useState('tile');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const rawStocks = portfolio.stockTickers
     .map((t) => stocks[t])
@@ -52,6 +54,11 @@ export default function PortfolioDetail({
               <path d="M3 5H17M6 10H14M9 15H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
+          {onDeletePortfolio && (
+            <button className="detail-delete-btn pressable" onClick={() => setShowDeleteConfirm(true)}>
+              Delete
+            </button>
+          )}
           <ViewToggle view={view} onToggle={setView} />
         </div>
       </div>
@@ -137,6 +144,26 @@ export default function PortfolioDetail({
       </div>
 
       <div style={{ height: '40px' }} />
+
+      {showDeleteConfirm && (
+        <div className="detail-delete-overlay" onClick={() => setShowDeleteConfirm(false)}>
+          <div className="detail-delete-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete portfolio?</h3>
+            <p>This will remove the portfolio and its holdings from your app.</p>
+            <div className="detail-delete-actions">
+              <button className="detail-delete-cancel" onClick={() => setShowDeleteConfirm(false)}>
+                Cancel
+              </button>
+              <button className="detail-delete-confirm" onClick={() => {
+                setShowDeleteConfirm(false);
+                onDeletePortfolio(portfolio.id);
+              }}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

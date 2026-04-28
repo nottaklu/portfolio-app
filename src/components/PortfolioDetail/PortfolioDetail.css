@@ -55,6 +55,22 @@
   gap: var(--space-sm);
 }
 
+.detail-delete-btn {
+  padding: 0 12px;
+  min-height: 36px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--red);
+  color: var(--red);
+  background: rgba(254, 226, 226, 0.8);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.detail-delete-btn:hover {
+  background: rgba(254, 226, 226, 1);
+}
+
 .detail-sort-btn {
   width: 36px;
   height: 36px;
@@ -224,3 +240,65 @@
   transition: opacity var(--transition-fast);
 }
 .detail-empty-add-btn:hover { opacity: 0.9; }
+
+.detail-delete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+}
+
+.detail-delete-modal {
+  width: min(420px, calc(100% - 40px));
+  background: var(--bg-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+  text-align: center;
+}
+
+.detail-delete-modal h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.detail-delete-modal p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+.detail-delete-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.detail-delete-cancel,
+.detail-delete-confirm {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+}
+
+.detail-delete-cancel {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+.detail-delete-confirm {
+  background: var(--red);
+  color: white;
+  border: none;
+}
+
+.detail-delete-cancel:hover,
+.detail-delete-confirm:hover {
+  opacity: 0.95;
+}

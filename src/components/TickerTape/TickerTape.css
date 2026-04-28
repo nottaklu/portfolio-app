@@ -23,7 +23,7 @@
   display: inline-flex;
   gap: var(--space-2xl);
   padding: 0 var(--space-md);
-  animation: ticker-scroll 30s linear infinite;
+  animation: ticker-scroll 60s linear infinite;
   will-change: transform;
 }
 

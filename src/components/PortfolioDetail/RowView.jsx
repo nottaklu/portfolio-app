@@ -15,7 +15,7 @@ function StockRow({ stock, onClick, index, portfolioIndicators }) {
     setTimeout(() => {
       setCycleIndex((prev) => (prev + 1) % 3);
       setAnimating(false);
-    }, 100);
+    }, 300);
   };
 
   const getCycleDisplay = () => {

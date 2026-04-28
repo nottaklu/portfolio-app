@@ -32,7 +32,10 @@ export default function App() {
     editStock,
     deleteStock,
     updateStockPrices,
-  } = usePortfolios(auth.user?.id);
+  sheetLoading,
+  sheetError,
+  refreshSheets,
+} = usePortfolios(auth.user?.id);
 
   // ── Tabs ──
   const [activeTab, setActiveTab] = useState('portfolio');
@@ -46,6 +49,7 @@ export default function App() {
   const [showAddStock, setShowAddStock] = useState(false);
   const [sortBy, setSortBy] = useState('value');
   const [priceStatus, setPriceStatus] = useState('loading');
+  const [refreshing, setRefreshing] = useState(false);
 
   // ── Build "All Portfolios" auto-card ──
   const allPortfolios = useMemo(() => {
@@ -118,8 +122,34 @@ export default function App() {
     setSortBy(null);
   };
 
-  const handleAddPortfolio = async (newPortfolio) => {
-    try { await addPortfolio(newPortfolio); } catch {}
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refreshSheets();
+      await fetchPrices();
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const handleDeletePortfolio = async (portfolioId) => {
+    try {
+      await deletePortfolio(portfolioId);
+      await reload();
+      setSelectedPortfolio(null);
+      setScreen('overview');
+    } catch {}
+  };
+
+  const handleAddPortfolio = async (newPortfolio, sheetConfig) => {
+    try {
+      const created = await addPortfolio(newPortfolio, sheetConfig);
+      if (newPortfolio.type === 'sheets' && sheetConfig) {
+        await refreshSheets();
+        setSelectedPortfolio(created);
+        setScreen('detail');
+      }
+    } catch {}
   };
 
   const handleAddStock = async (stockData) => {
@@ -184,7 +214,8 @@ export default function App() {
           onAddPortfolio={() => setShowAddPortfolio(true)}
           loading={dataLoading}
           priceStatus={priceStatus}
-          onRefresh={fetchPrices}
+          onRefresh={handleRefresh}
+          refreshing={refreshing || sheetLoading}
           displayName={auth.profile?.display_name}
           onLogout={auth.logout}
         />
@@ -198,6 +229,7 @@ export default function App() {
           onStockClick={(stock) => setSelectedStock(stock)}
           onOpenSort={() => setShowSortModal(true)}
           onAddStock={selectedPortfolio.id !== '__all__' ? () => setShowAddStock(true) : undefined}
+          onDeletePortfolio={selectedPortfolio.id !== '__all__' ? handleDeletePortfolio : undefined}
           sortBy={sortBy}
           loading={false}
           tickerPortfolioMap={selectedPortfolio.id === '__all__' ? tickerPortfolioMap : null}

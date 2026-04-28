@@ -18,7 +18,7 @@ function StockTile({ stock, onClick, portfolioIndicators }) {
     setTimeout(() => {
       setCycleIndex((prev) => (prev + 1) % 3);
       setAnimating(false);
-    }, 100);
+    }, 300);
   };
 
   const getCycleData = () => {

@@ -25,6 +25,25 @@
   letter-spacing: -0.3px;
 }
 
+.overview-refresh-btn {
+  margin-top: 4px;
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+.overview-refresh-btn:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  background: var(--bg-secondary);
+}
+.overview-refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Logout button */
 .overview-logout-btn {
   width: 38px;

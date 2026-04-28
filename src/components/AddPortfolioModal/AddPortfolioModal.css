@@ -37,6 +37,31 @@
 .add-pf-input:focus { border-color: var(--accent-blue); }
 .add-pf-input::placeholder { color: var(--text-muted); }
 
+.add-pf-source-selector {
+  display: flex;
+  gap: 10px;
+}
+.add-pf-source-selector .source-option {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+.add-pf-source-selector .source-option.active {
+  background: var(--bg-secondary);
+  border-color: var(--accent-blue);
+}
+
+.add-pf-field-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
 /* Color Picker */
 .add-pf-colors { display: flex; gap: 10px; flex-wrap: wrap; }
 .add-pf-color-btn {
