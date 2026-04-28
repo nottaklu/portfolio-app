@@ -30,12 +30,14 @@ export default function App() {
     addPortfolio,
     addStock,
     editStock,
+    deletePortfolio,
     deleteStock,
     updateStockPrices,
-  sheetLoading,
-  sheetError,
-  refreshSheets,
-} = usePortfolios(auth.user?.id);
+    reload,
+    sheetLoading,
+    sheetError,
+    refreshSheets,
+  } = usePortfolios(auth.user?.id);
 
   // ── Tabs ──
   const [activeTab, setActiveTab] = useState('portfolio');
@@ -88,9 +90,14 @@ export default function App() {
     try {
       const result = await fetchAllLivePrices(allTickers);
       const priceMap = result.prices || result;
+      console.log('Fetched prices:', priceMap);
       updateStockPrices(priceMap);
       setPriceStatus(result.errors?.length > 0 ? 'stale' : 'live');
-    } catch {
+      if (result.errors?.length > 0) {
+        console.warn('Price fetch errors:', result.errors);
+      }
+    } catch (err) {
+      console.error('Price fetch failed:', err);
       setPriceStatus('error');
     }
   }, [stocks, updateStockPrices]);
