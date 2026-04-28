@@ -55,6 +55,21 @@ export async function fetchLivePrice(ticker) {
   };
 }
 
+export async function fetchStockInfo(ticker) {
+  if (!ticker) return null;
+  try {
+    const results = await searchStocks(ticker);
+    if (!results || results.length === 0) return null;
+
+    const normalized = ticker.toUpperCase().replace(/\.NS$/, '');
+    const exactMatch = results.find((item) => item.ticker.toUpperCase() === normalized);
+    return exactMatch || results[0];
+  } catch (err) {
+    console.warn('Yahoo stock info lookup failed:', err?.message || err);
+    return null;
+  }
+}
+
 // ─── FETCH ALL LIVE PRICES (parallel, with cache) ──────────────
 export async function fetchAllLivePrices(tickers) {
   if (!tickers || tickers.length === 0) return { prices: {}, errors: [] };

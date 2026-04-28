@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { fetchGoogleSheetHoldings } from '../lib/googleSheets';
+import { fetchStockInfo } from '../lib/yahooFinance';
 
 const SHEET_CONFIGS_KEY = 'portfolio_sheet_configs';
 const SHEET_CACHE_KEY = 'portfolio_sheet_cache';
@@ -36,6 +37,41 @@ function loadSheetCache() {
 
 function saveSheetCache(cache) {
   writeLocalStorage(SHEET_CACHE_KEY, cache);
+}
+
+async function hydrateSheetHoldings(holdings) {
+  if (!holdings || holdings.length === 0) return holdings;
+
+  const rows = holdings.map((holding) => ({
+    ...holding,
+    name: holding.name || holding.ticker,
+  }));
+
+  const needsNames = rows.filter(
+    (row) => !row.name || row.name.toUpperCase() === row.ticker.toUpperCase()
+  );
+  if (needsNames.length === 0) return rows;
+
+  const uniqueTickers = Array.from(
+    new Set(needsNames.map((row) => row.ticker.toUpperCase()))
+  );
+
+  const infoMap = {};
+  await Promise.all(
+    uniqueTickers.map(async (ticker) => {
+      try {
+        const info = await fetchStockInfo(ticker);
+        infoMap[ticker] = info?.name || info?.shortname || info?.longname || ticker;
+      } catch {
+        infoMap[ticker] = ticker;
+      }
+    })
+  );
+
+  return rows.map((row) => ({
+    ...row,
+    name: infoMap[row.ticker.toUpperCase()] || row.name || row.ticker,
+  }));
 }
 
 function shouldRefreshSheet(lastSync) {
@@ -102,7 +138,7 @@ export function usePortfolios(userId) {
 
   const loadSheetDataForPortfolios = useCallback(
     async (portfolioList, stockData, forceRefresh) => {
-      const configs = loadSheetConfigs();
+      const localConfigs = loadSheetConfigs();
       const cache = loadSheetCache();
       const nextCache = { ...cache };
       let latestStockData = [...stockData];
@@ -111,7 +147,7 @@ export function usePortfolios(userId) {
       const updatedPortfolios = await Promise.all(
         portfolioList.map(async (portfolio) => {
           if (portfolio.type !== 'sheets') return portfolio;
-          const config = configs[portfolio.id];
+          const config = portfolio.sheet_config || localConfigs[portfolio.id];
           if (!config) return portfolio;
 
           let cached = nextCache[portfolio.id];
@@ -119,8 +155,9 @@ export function usePortfolios(userId) {
           if (needsRefresh) {
             try {
               const holdings = await fetchGoogleSheetHoldings(config);
+              const hydratedHoldings = await hydrateSheetHoldings(holdings);
               cached = {
-                rows: holdings,
+                rows: hydratedHoldings,
                 lastSync: new Date().toISOString(),
               };
               nextCache[portfolio.id] = cached;
@@ -131,8 +168,15 @@ export function usePortfolios(userId) {
           }
 
           if (cached?.rows?.length) {
+            const hydratedRows = await hydrateSheetHoldings(cached.rows);
+            if (hydratedRows !== cached.rows) {
+              nextCache[portfolio.id] = {
+                ...cached,
+                rows: hydratedRows,
+              };
+            }
             latestStockData = latestStockData.filter((s) => s.portfolio_id !== portfolio.id);
-            const sheetRows = mapSheetHoldingsToStockRows(portfolio.id, cached.rows);
+            const sheetRows = mapSheetHoldingsToStockRows(portfolio.id, hydratedRows);
             latestStockData = latestStockData.concat(sheetRows);
             return {
               ...portfolio,
@@ -163,7 +207,7 @@ export function usePortfolios(userId) {
 
         const { data: pfData, error: pfErr } = await supabase
           .from('portfolios')
-          .select('*')
+          .select('*, sheet_config')
           .eq('user_id', userId)
           .order('position', { ascending: true });
 
@@ -185,6 +229,7 @@ export function usePortfolios(userId) {
           name: p.name,
           color: p.color,
           type: p.type,
+          sheet_config: p.sheet_config,
           stockTickers: stockData
             .filter((s) => s.portfolio_id === p.id)
             .map((s) => s.ticker),
@@ -244,6 +289,7 @@ export function usePortfolios(userId) {
             color: portfolio.color,
             type: portfolio.type || 'manual',
             position: portfolios.length,
+            sheet_config: sheetConfig || null,
           })
           .select()
           .single();
